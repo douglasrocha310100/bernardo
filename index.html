@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#102b20">
+  <meta name="description" content="Convite do primeiro aniversário do Bernardo — 20 de fevereiro de 2027.">
+  <title>Bernardo • Primeiro aniversário</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <section class="opening" id="opening" aria-label="Abrir convite">
+      <div class="opening-glow"></div>
+      <div class="opening-copy">
+        <span class="eyebrow">UM DIA MUITO ESPECIAL</span>
+        <p class="opening-kicker">Primeiro aniversário</p>
+        <h1>Bernardo</h1>
+        <span class="gold-rule"></span>
+        <p class="opening-date">20 . 02 . 2027</p>
+      </div>
+
+      <button class="envelope-button" id="openInvite" type="button" aria-label="Clique aqui para abrir o convite">
+        <img src="assets/envelope-bernardo.jpg" alt="Envelope verde com selo dourado de coroa">
+        <span class="envelope-cta">Clique aqui para abrir</span>
+      </button>
+      <p class="opening-foot">Com carinho, esperamos você para celebrar conosco</p>
+    </section>
+
+    <section class="invitation" id="invitation" aria-hidden="true">
+      <header class="hero-photo" aria-label="Fotografia do Bernardo">
+        <!-- Substitua assets/foto-bernardo.jpg pela foto desejada. -->
+        <img class="bernardo-photo" src="assets/foto-bernardo.jpg" alt="Bernardo" onerror="this.style.display='none'; this.nextElementSibling.style.display='grid'">
+        <div class="photo-placeholder">
+          <span class="placeholder-animal">🦒</span>
+          <span class="placeholder-label">UM ANINHO DE AMOR</span>
+          <strong>A foto do Bernardo<br>entra aqui</strong>
+          <small>Substitua o arquivo <b>foto-bernardo.jpg</b> na pasta assets</small>
+        </div>
+        <div class="photo-shade"></div>
+        <div class="hero-caption">
+          <span>Nosso pequeno aventureiro</span>
+          <h2>Bernardo faz 1</h2>
+        </div>
+      </header>
+
+      <div class="page-content">
+        <section class="welcome section-block">
+          <span class="eyebrow dark">UMA AVENTURA CHAMADA VIDA</span>
+          <h2>Em breve, um ano<br>de amor e aventuras!</h2>
+          <span class="gold-rule"></span>
+          <p>Há um ano, nossa vida ganhou novas cores, nossos dias ficaram mais alegres e descobrimos um amor que não cabe no peito.</p>
+          <p>Nosso pequeno Bernardo está completando seu primeiro aninho e queremos comemorar esse momento tão especial ao lado de pessoas queridas como você!</p>
+          <div class="leaf-divider" aria-hidden="true">✦</div>
+        </section>
+
+        <section class="details section-block">
+          <div class="animal animal-left" aria-hidden="true">🦁</div>
+          <div class="animal animal-right" aria-hidden="true">🐘</div>
+          <span class="eyebrow dark">RESERVE ESTA DATA</span>
+          <h2>Vamos celebrar?</h2>
+          <div class="date-card">
+            <span class="date-month">FEVEREIRO</span>
+            <strong>20</strong>
+            <span class="date-weekday">SÁBADO • 2027</span>
+          </div>
+          <p class="date-note">Será uma alegria ter você com a gente!</p>
+        </section>
+
+        <section class="closing section-block">
+          <div class="animal animal-small" aria-hidden="true">🦓</div>
+          <span class="eyebrow dark">SUA PRESENÇA É O NOSSO PRESENTE</span>
+          <h2>Esperamos por você!</h2>
+          <p>Confirme sua presença e, se desejar, confira as informações especiais que preparamos.</p>
+
+          <div class="action-list">
+            <a class="action-button whatsapp" id="whatsappLink" href="#" target="_blank" rel="noopener">
+              <span class="action-icon">♡</span>
+              <span><b>Confirmar presença</b><small>Responda pelo WhatsApp</small></span>
+              <span class="action-arrow">↗</span>
+            </a>
+            <button class="action-button" id="openGifts" type="button">
+              <span class="action-icon">✧</span>
+              <span><b>Sugestões de presentes</b><small>Medidas do Bernardo e Pix</small></span>
+              <span class="action-arrow">＋</span>
+            </button>
+            <a class="action-button" id="locationLink" href="#" target="_blank" rel="noopener">
+              <span class="action-icon">⌖</span>
+              <span><b>Ver localização</b><small>Abra o endereço no mapa</small></span>
+              <span class="action-arrow">↗</span>
+            </a>
+          </div>
+          <p class="signature">Com carinho, família do Bernardo</p>
+        </section>
+      </div>
+      <footer class="footer">FEITO COM AMOR PARA CELEBRAR O BERNARDO <span>✦</span></footer>
+    </section>
+  </main>
+
+  <div class="modal-backdrop" id="giftModal" aria-hidden="true">
+    <section class="gift-modal" role="dialog" aria-modal="true" aria-labelledby="giftTitle">
+      <button class="modal-close" id="closeGifts" type="button" aria-label="Fechar">×</button>
+      <span class="eyebrow dark">UM MIMO PARA NOSSO PEQUENO</span>
+      <h2 id="giftTitle">Sugestões de presentes</h2>
+      <p class="modal-intro">Sua presença é o mais importante! Mas, se desejar presentear o Bernardo, deixamos algumas informações para ajudar.</p>
+      <div class="measurements">
+        <div><span>ROUPINHA</span><b>A preencher</b></div>
+        <div><span>CALÇADO</span><b>A preencher</b></div>
+        <div><span>ALTURA</span><b>A preencher</b></div>
+      </div>
+      <div class="pix-area">
+        <span class="pix-label">PIX • PRESENTE EM CARINHO</span>
+        <div class="qr-placeholder" aria-label="Espaço reservado para o QR Code Pix">
+          <span>QR CODE<br>PIX</span>
+        </div>
+        <p>O QR Code e a chave Pix serão adicionados aqui.</p>
+        <button class="copy-pix" id="copyPix" type="button" disabled>Copiar chave Pix</button>
+      </div>
+      <p class="modal-thanks">Muito obrigado por fazer parte desse momento! ♡</p>
+    </section>
+  </div>
+<audio
+    id="backgroundMusic"
+    src="assets/musica.mpeg"
+    loop
+    preload="auto">
+</audio>
+
+  <script src="script.js"></script>
+</body>
+</html>
