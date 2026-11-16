@@ -3,132 +3,810 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#102b20">
+  <meta name="theme-color" content="#0b2118">
   <meta name="description" content="Convite do primeiro aniversário do Bernardo — 20 de fevereiro de 2027.">
   <title>Bernardo • Primeiro aniversário</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    :root {
+      --branco: #ffffff;
+      --texto: #1d2a21;          /* ~15:1 sobre branco */
+      --texto-suave: #4a4f44;    /* ~8:1 sobre branco */
+      --verde: #14412e;          /* títulos e botões */
+      --verde-escuro: #0c2a1d;   /* rodapé */
+      --dourado: #c49a50;        /* só decorativo */
+      --dourado-texto: #7a5a24;  /* textos dourados, ~6:1 */
+      --borda: #e4d9bd;
+      --creme: #faf7ef;
+      --serif: "Playfair Display", Georgia, serif;
+      --sans: "Poppins", Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background: var(--branco);
+      color: var(--texto);
+      font-family: var(--sans);
+      font-size: 1.125rem;
+      line-height: 1.75;
+      overflow-x: hidden; /* evita barra lateral causada pelos animais */
+    }
+
+    button, a { font: inherit; }
+    button:focus-visible, a:focus-visible {
+      outline: 3px solid var(--verde);
+      outline-offset: 4px;
+    }
+
+    /* ----------- TELA DE ABERTURA (envelope) ----------- */
+    /* Restaurada: ao tocar no envelope, a música começa e a página do convite aparece */
+    .opening {
+      min-height: 100svh;
+      padding: 42px 20px 28px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      color: #f4efe3;
+      text-align: center;
+      background: radial-gradient(ellipse at 50% 45%, #244b34 0%, #153624 45%, #0b2118 100%);
+    }
+    .opening::before, .opening::after {
+      content: "";
+      position: absolute;
+      width: min(70vw, 600px);
+      height: min(70vw, 600px);
+      border: 1px solid rgba(197, 157, 85, .16);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .opening::before { transform: scale(1.25); }
+    .opening::after  { transform: scale(1.48); }
+    .opening-glow {
+      position: absolute;
+      inset: 0;
+      opacity: .14;
+      pointer-events: none;
+      background-image: radial-gradient(#d7bd82 0.6px, transparent .6px);
+      background-size: 18px 18px;
+    }
+    .opening-copy, .envelope-button, .opening-foot { position: relative; z-index: 1; }
+    .opening .eyebrow { color: #e5c98d; }
+    .opening-kicker {
+      margin: 16px 0 0;
+      font-family: var(--serif);
+      font-size: clamp(1.25rem, 4vw, 1.8rem);
+      color: #f3e8d1;
+    }
+    .opening h1 {
+      margin: 0;
+      font: 600 clamp(3rem, 10vw, 5.5rem)/1.05 var(--serif);
+      color: #f7edda;
+    }
+    .opening .gold-rule {
+      margin: 20px auto;
+      background: linear-gradient(90deg, transparent, #e5c98d, transparent);
+    }
+    .opening-date {
+      margin: 0 0 22px;
+      font-size: .75rem;
+      letter-spacing: .32em;
+      color: #dfc995;
+    }
+    .envelope-button {
+      display: block;
+      width: min(850px, 88vw);
+      border: 0;
+      padding: 0;
+      background: transparent;
+      cursor: pointer;
+      transition: transform .35s ease, filter .35s ease;
+    }
+    .envelope-button:hover {
+      transform: translateY(-5px) scale(1.012);
+      filter: drop-shadow(0 18px 24px rgba(0, 0, 0, .28));
+    }
+    .envelope-button img {
+      display: block;
+      width: 100%;
+      border-radius: 3px;
+      box-shadow: 0 20px 55px rgba(0, 0, 0, .32);
+    }
+    .envelope-cta {
+      position: absolute;
+      left: 50%;
+      top: 73%;
+      transform: translate(-50%, -50%);
+      white-space: nowrap;
+      padding: 10px 18px;
+      border: 1px solid rgba(255, 230, 177, .78);
+      border-radius: 999px;
+      background: rgba(14, 42, 27, .78);
+      color: #fff1d2;
+      font-size: clamp(.58rem, 2vw, .78rem);
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+    .opening-foot {
+      margin: 22px 0 0;
+      color: #c7c2ae;
+      font-size: .75rem;
+      letter-spacing: .04em;
+    }
+
+    /* Página do convite: fica oculta até o envelope ser aberto */
+    .invitation { display: none; opacity: 0; background: var(--branco); }
+    .invitation.visible { display: block; animation: pageIn .85s ease forwards; }
+    @keyframes pageIn { to { opacity: 1; } }
+
+    /* ----------- HERO ----------- */
+    .hero {
+      position: relative;
+      height: min(78vw, 690px);
+      min-height: 440px;
+      max-height: 760px;
+      overflow: hidden;
+      background: #b8ad8c;
+    }
+    .hero-foto {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 38%;
+    }
+    .hero-placeholder {
+      position: absolute;
+      inset: 0;
+      display: none;
+      place-content: center;
+      justify-items: center;
+      gap: 10px;
+      text-align: center;
+      color: #ffffff;
+      background: linear-gradient(145deg, #8c9872, #344e38 65%, #203a2b);
+    }
+    .hero-placeholder strong { font: 600 2.4rem/1.1 var(--serif); }
+    .hero-placeholder small { font-size: .85rem; opacity: .9; }
+
+    .hero-sombra {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(8, 28, 19, 0) 0%,
+        rgba(8, 28, 19, .55) 60%,
+        rgba(8, 28, 19, .6) 82%,
+        #ffffff 100%
+      );
+      pointer-events: none;
+    }
+    .hero-legenda {
+      position: absolute;
+      z-index: 1;
+      bottom: 16%;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      color: #ffffff;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, .4);
+    }
+    .hero-legenda span {
+      font-size: .8rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+    .hero-legenda h1 {
+      margin: 8px 0 0;
+      font: 600 clamp(2.6rem, 8vw, 5rem)/1 var(--serif);
+    }
+
+    /* ----------- BLOCOS ----------- */
+    .bloco {
+      position: relative;
+      padding: 72px 24px;
+      text-align: center;
+    }
+    .eyebrow {
+      display: block;
+      letter-spacing: .2em;
+      font-size: .78rem;
+      font-weight: 600;
+      color: var(--dourado-texto);
+      text-transform: uppercase;
+    }
+    .bloco h2 {
+      margin: 14px 0 18px;
+      font: 600 clamp(2rem, 6vw, 3.2rem)/1.15 var(--serif);
+      color: var(--verde);
+    }
+    .bloco p {
+      max-width: 620px;
+      margin: 14px auto;
+      color: var(--texto-suave);
+    }
+    .regra-dourada {
+      display: block;
+      width: 58px;
+      height: 1px;
+      margin: 18px auto;
+      background: linear-gradient(90deg, transparent, var(--dourado), transparent);
+    }
+
+    .boas-vindas { margin: 0 auto; padding-top: 56px; }
+
+    /* ----------- DATA ----------- */
+    .detalhes { background: var(--creme); }
+    .cartao-data {
+      width: min(240px, 75vw);
+      margin: 28px auto 20px;
+      padding: 22px 16px;
+      border: 1px solid var(--borda);
+      background: var(--branco);
+      border-radius: 6px;
+      box-shadow: 0 10px 28px rgba(20, 65, 46, .08);
+    }
+    .cartao-data .mes,
+    .cartao-data .dia-semana {
+      display: block;
+      letter-spacing: .18em;
+      font-size: .78rem;
+      font-weight: 600;
+      color: var(--dourado-texto);
+    }
+    .cartao-data strong {
+      display: block;
+      margin: 4px 0;
+      font: 600 5.5rem/1 var(--serif);
+      color: var(--verde);
+    }
+    .nota-data { font-family: var(--serif); font-style: italic; color: var(--texto-suave); }
+
+    /* ----------- FOTO SECUNDÁRIA ----------- */
+    .foto-secao {
+      position: relative;
+      width: 100%;
+      height: 500px;
+      overflow: hidden;
+    }
+    .foto-secao img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .foto-secao::before,
+    .foto-secao::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 130px;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .foto-secao::before {
+      top: 0;
+      background: linear-gradient(to bottom, #142b20 0%, rgba(20, 43, 32, .7) 35%, transparent 100%);
+    }
+    .foto-secao::after {
+      bottom: 0;
+      background: linear-gradient(to top, #142b20 0%, rgba(20, 43, 32, .7) 35%, transparent 100%);
+    }
+
+    /* ----------- BOTÕES HORIZONTAIS COM ÍCONES ----------- */
+    .acoes {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 14px;
+      margin: 34px auto 0;
+    }
+    .btn-acao {
+      width: 60px;
+      height: 60px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 50%;
+      background: var(--verde);
+      color: #ffffff;
+      font-size: 1.45rem;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .18s ease, background .18s ease;
+    }
+    .btn-acao:hover { background: var(--verde-escuro); transform: translateY(-3px); }
+
+    /* ----------- ANIMAIS ESPIANDO ----------- */
+    .animal-espiando {
+      position: absolute;
+      z-index: 5;
+      width: calc(var(--tam, 150px) * .8);
+      height: auto;
+      pointer-events: none;
+      user-select: none;
+      transform: rotate(var(--rot, 0deg)) scaleX(var(--espelho, 1));
+    }
+    .canto-direita-topo  { right: -7px; --tam: 250px; }
+    .canto-direita-base  { right: -7px; --tam: 250px; }
+    .canto-esquerda-topo { left: -7px; --tam: 250px; }
+    .canto-esquerda-base { left: -7px; --tam: 250px; }
+
+    /* ----------- FECHAMENTO ----------- */
+    .fechamento { background: var(--branco); padding-bottom: 64px; }
+    .assinatura {
+      margin: 36px auto 0;
+      color: var(--dourado-texto);
+      font: italic 1.2rem var(--serif);
+    }
+
+    /* ----------- RODAPÉ ----------- */
+    .rodape {
+      padding: 22px 16px;
+      background: var(--verde-escuro);
+      color: #f1e4c4;
+      text-align: center;
+      font-size: .75rem;
+      letter-spacing: .15em;
+    }
+
+    /* ----------- MODAL DE PRESENTES ----------- */
+    .modal-fundo {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 30;
+      padding: 18px;
+      align-items: center;
+      justify-content: center;
+      background: rgba(7, 20, 14, .72);
+    }
+    .modal-fundo.aberto { display: flex; }
+    .modal {
+      position: relative;
+      width: min(100%, 520px);
+      max-height: min(90svh, 850px);
+      overflow-y: auto;
+      padding: 36px 26px 26px;
+      border: 1px solid var(--borda);
+      border-radius: 12px;
+      background: var(--branco);
+      text-align: center;
+    }
+    .modal-fechar {
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      border: 0;
+      background: transparent;
+      color: var(--texto-suave);
+      font-size: 2rem;
+      line-height: 1;
+      cursor: pointer;
+    }
+    .modal h2 {
+      margin: 10px 0 12px;
+      font: 600 clamp(1.8rem, 6vw, 2.4rem)/1.1 var(--serif);
+      color: var(--verde);
+    }
+    .modal-intro { font-size: .95rem; color: var(--texto-suave); }
+    .medidas {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin: 20px 0;
+    }
+    .medidas div { padding: 12px 6px; background: var(--creme); border-radius: 6px; }
+    .medidas span { display: block; font-size: .72rem; letter-spacing: .1em; font-weight: 600; color: var(--dourado-texto); }
+    .medidas b { display: block; margin-top: 6px; font-size: .9rem; color: var(--texto); }
+    .area-pix {
+      padding: 18px;
+      border: 1px dashed #b8975a;
+      border-radius: 8px;
+      background: var(--creme);
+    }
+    .area-pix .rotulo { font-size: .75rem; letter-spacing: .15em; font-weight: 600; color: var(--dourado-texto); }
+    .qr-espaco {
+      display: grid;
+      place-items: center;
+      width: 140px;
+      height: 140px;
+      margin: 14px auto 10px;
+      background: var(--branco);
+      border: 1px solid var(--borda);
+      color: var(--texto-suave);
+      font-size: .8rem;
+    }
+    .area-pix p { font-size: .85rem; color: var(--texto-suave); margin: 6px 0; }
+    .copiar-pix {
+      margin-top: 6px;
+      padding: 9px 18px;
+      border: 1px solid var(--verde);
+      border-radius: 99px;
+      background: transparent;
+      color: var(--verde);
+      font-size: .85rem;
+      cursor: pointer;
+    }
+    .modal-obrigado { margin-top: 18px; font: italic 1.05rem var(--serif); color: var(--dourado-texto); }
+
+    /* ----------- RESPONSIVO ----------- */
+    @media (min-width: 700px) {
+      .bloco { padding: 96px 40px; }
+      .animal-espiando { width: calc(var(--tam, 150px) * 1.9); }
+      .canto-direita-topo  { right: 15px; --tam: 250px; }
+      .canto-direita-base  { right: 15px; --tam: 250px; }
+      .canto-esquerda-topo { left: 15px; --tam: 250px; }
+      .canto-esquerda-base { left: 15px; --tam: 250px; }
+      .foto-secao { height: 560px; }
+      .opening { padding-top: 56px; }
+    }
+    @media (max-width: 768px) {
+      .foto-secao { height: 380px; }
+    }
+    @media (max-width: 600px) {
+      .opening { padding-top: 30px; }
+      .envelope-button { width: 96vw; }
+      .envelope-cta { padding: 8px 12px; letter-spacing: .08em; }
+      .opening-foot { max-width: 260px; line-height: 1.6; }
+      .hero { min-height: 480px; height: 112vw; max-height: 650px; }
+      .bloco { padding-left: 22px; padding-right: 22px; }
+      .btn-acao { width: 56px; height: 56px; font-size: 1.3rem; }
+      .acoes { gap: 12px; }
+      .canto-direita-topo  { --tam: 150px; top: -40px; right: -14px; }
+      .canto-direita-base  { --tam: 110px; bottom: -36px; right: -14px; }
+      .canto-esquerda-topo { --tam: 110px; top: -36px; left: -14px; }
+      .canto-esquerda-base { --tam: 110px; bottom: -36px; left: -14px; }
+      .medidas { gap: 5px; }
+      .medidas b { font-size: .8rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
 </head>
+
 <body>
-  <main>
-    <section class="opening" id="opening" aria-label="Abrir convite">
-      <div class="opening-glow"></div>
-      <div class="opening-copy">
-        <span class="eyebrow">UM DIA MUITO ESPECIAL</span>
-        <p class="opening-kicker">Primeiro aniversário</p>
-        <h1>Bernardo</h1>
-        <span class="gold-rule"></span>
-        <p class="opening-date">20 . 02 . 2027</p>
-      </div>
 
-      <button class="envelope-button" id="openInvite" type="button" aria-label="Clique aqui para abrir o convite">
-        <img src="assets/envelope-bernardo.jpg" alt="Envelope verde com selo dourado de coroa">
-        <span class="envelope-cta">Clique aqui para abrir</span>
-      </button>
-      <p class="opening-foot">Com carinho, esperamos você para celebrar conosco</p>
-    </section>
+  <!-- ÁUDIO: não toca sozinho. Começa quando o envelope é aberto (gesto do usuário,
+       exigido pelos navegadores). -->
+  <audio id="musica" preload="auto">
+    <source src="assets/musica.mpeg" type="audio/mpeg">
+    <source src="assets/musica.mp3" type="audio/mpeg">
+  </audio>
 
-    <section class="invitation" id="invitation" aria-hidden="true">
-      <header class="hero-photo" aria-label="Fotografia do Bernardo">
-        <!-- Substitua assets/foto-bernardo.jpg pela foto desejada. -->
-        <img class="bernardo-photo" src="assets/foto-bernardo.jpg" alt="Bernardo" onerror="this.style.display='none'; this.nextElementSibling.style.display='grid'">
-        <div class="photo-placeholder">
-          <span class="placeholder-animal">🦒</span>
-          <span class="placeholder-label">UM ANINHO DE AMOR</span>
+  <!-- ============================================================
+       TELA DE ABERTURA (envelope)
+       Ao tocar no envelope: a música começa e o convite aparece.
+       ============================================================ -->
+  <section class="opening" id="opening" aria-label="Abrir convite">
+    <div class="opening-glow"></div>
+    <div class="opening-copy">
+      <span class="eyebrow">Um dia muito especial</span>
+      <p class="opening-kicker">Primeiro aniversário</p>
+      <h1>Bernardo</h1>
+      <span class="regra-dourada gold-rule"></span>
+      <p class="opening-date">20 . 02 . 2027</p>
+    </div>
+
+    <button class="envelope-button" id="abrirConvite" type="button"
+            aria-label="Clique aqui para abrir o convite">
+      <img src="assets/envelope-bernardo.jpg" alt="Envelope verde com selo dourado de coroa">
+      <span class="envelope-cta">Clique aqui para abrir</span>
+    </button>
+    <p class="opening-foot">Com carinho, esperamos você para celebrar conosco</p>
+  </section>
+
+  <!-- ============================================================
+       PÁGINA DO CONVITE (oculta até abrir o envelope)
+       ============================================================ -->
+  <div class="invitation" id="invitation" aria-hidden="true">
+  <div class="pagina">
+    <main>
+
+      <!-- HERO -->
+      <header class="hero">
+        <img class="hero-foto" src="assets/foto-bernardo.jpg" alt="Foto do Bernardo"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';">
+        <div class="hero-placeholder">
           <strong>A foto do Bernardo<br>entra aqui</strong>
-          <small>Substitua o arquivo <b>foto-bernardo.jpg</b> na pasta assets</small>
+          <small>Substitua assets/foto-bernardo.jpg</small>
         </div>
-        <div class="photo-shade"></div>
-        <div class="hero-caption">
+        <div class="hero-sombra"></div>
+        <div class="hero-legenda">
           <span>Nosso pequeno aventureiro</span>
-          <h2>Bernardo faz 1</h2>
+          <h1>Bernardo faz 1</h1>
         </div>
       </header>
 
-      <div class="page-content">
-        <section class="welcome section-block">
-          <span class="eyebrow dark">UMA AVENTURA CHAMADA VIDA</span>
-          <h2>Em breve, um ano<br>de amor e aventuras!</h2>
-          <span class="gold-rule"></span>
-          <p>Há um ano, nossa vida ganhou novas cores, nossos dias ficaram mais alegres e descobrimos um amor que não cabe no peito.</p>
-          <p>Nosso pequeno Bernardo está completando seu primeiro aninho e queremos comemorar esse momento tão especial ao lado de pessoas queridas como você!</p>
-          <div class="leaf-divider" aria-hidden="true">✦</div>
-        </section>
+      <!-- BOAS-VINDAS -->
+      <section class="boas-vindas bloco">
+        <!-- Leão espiando pela quina superior direita.
+             Arquivo esperado: assets/leaozinho.png -->
+        <img class="animal-espiando canto-direita-topo" src="assets/leaozinho.png" alt="" aria-hidden="true"
+             onerror="this.remove()">
 
-        <section class="details section-block">
-          <div class="animal animal-left" aria-hidden="true">🦁</div>
-          <div class="animal animal-right" aria-hidden="true">🐘</div>
-          <span class="eyebrow dark">RESERVE ESTA DATA</span>
-          <h2>Vamos celebrar?</h2>
-          <div class="date-card">
-            <span class="date-month">FEVEREIRO</span>
-            <strong>20</strong>
-            <span class="date-weekday">SÁBADO • 2027</span>
-          </div>
-          <p class="date-note">Será uma alegria ter você com a gente!</p>
-        </section>
+        <span class="eyebrow">Uma aventura chamada vida</span>
+        <h2>Em breve, um ano<br>de amor e aventuras!</h2>
+        <span class="regra-dourada"></span>
+        <p>Há um ano, nossa vida ganhou novas cores, nossos dias ficaram mais alegres e descobrimos um amor que não cabe no peito.</p>
+        <p>Nosso pequeno Bernardo está completando seu primeiro aninho e queremos comemorar esse momento tão especial ao lado de pessoas queridas como você!</p>
+      </section>
 
-        <section class="closing section-block">
-          <div class="animal animal-small" aria-hidden="true">🦓</div>
-          <span class="eyebrow dark">SUA PRESENÇA É O NOSSO PRESENTE</span>
-          <h2>Esperamos por você!</h2>
-          <p>Confirme sua presença e, se desejar, confira as informações especiais que preparamos.</p>
+      <!-- DATA -->
+      <section class="detalhes bloco">
+        <!-- Placeholder de animal, canto inferior esquerdo.
+             Troque o src pela sua imagem PNG quando tiver. -->
+        <img class="animal-espiando canto-esquerda-base"
+             src="https://placehold.co/220x220/png?text=Coelho" alt="" aria-hidden="true">
 
-          <div class="action-list">
-            <a class="action-button whatsapp" id="whatsappLink" href="#" target="_blank" rel="noopener">
-              <span class="action-icon">♡</span>
-              <span><b>Confirmar presença</b><small>Responda pelo WhatsApp</small></span>
-              <span class="action-arrow">↗</span>
-            </a>
-            <button class="action-button" id="openGifts" type="button">
-              <span class="action-icon">✧</span>
-              <span><b>Sugestões de presentes</b><small>Medidas do Bernardo e Pix</small></span>
-              <span class="action-arrow">＋</span>
-            </button>
-            <a class="action-button" id="locationLink" href="#" target="_blank" rel="noopener">
-              <span class="action-icon">⌖</span>
-              <span><b>Ver localização</b><small>Abra o endereço no mapa</small></span>
-              <span class="action-arrow">↗</span>
-            </a>
-          </div>
-          <p class="signature">Com carinho, família do Bernardo</p>
-        </section>
-      </div>
-      <footer class="footer">FEITO COM AMOR PARA CELEBRAR O BERNARDO <span>✦</span></footer>
-    </section>
-  </main>
+        <span class="eyebrow">Reserve esta data</span>
+        <h2>Vamos celebrar?</h2>
+        <div class="cartao-data">
+          <span class="mes">FEVEREIRO</span>
+          <strong>20</strong>
+          <span class="dia-semana">SÁBADO • 2027</span>
+        </div>
+        <p class="nota-data">Será uma alegria ter você com a gente!</p>
+      </section>
 
-  <div class="modal-backdrop" id="giftModal" aria-hidden="true">
-    <section class="gift-modal" role="dialog" aria-modal="true" aria-labelledby="giftTitle">
-      <button class="modal-close" id="closeGifts" type="button" aria-label="Fechar">×</button>
-      <span class="eyebrow dark">UM MIMO PARA NOSSO PEQUENO</span>
-      <h2 id="giftTitle">Sugestões de presentes</h2>
+      <!-- FOTO SECUNDÁRIA -->
+      <section class="foto-secao">
+        <img src="assets/segunda-foto.jpeg" alt="Foto do Bernardo">
+      </section>
+
+      <!-- FECHAMENTO + BOTÕES -->
+      <section class="fechamento bloco">
+        <!-- Animal, canto inferior direito -->
+        <img class="animal-espiando canto-direita-base"
+             src="assets/leaozinho.png" alt="" aria-hidden="true">
+
+        <span class="eyebrow">Sua presença é o nosso presente</span>
+        <h2>Esperamos por você!</h2>
+        <p>Confirme sua presença e, se desejar, confira as informações especiais que preparamos.</p>
+
+        <!-- Botões horizontais com ícones.
+             Cada um tem aria-label (leitor de tela) e title (tooltip). -->
+        <nav class="acoes" aria-label="Ações do convite">
+          <a class="btn-acao" id="linkLocalizacao" href="#" target="_blank" rel="noopener"
+             aria-label="Ver localização no mapa" title="Localização">
+            <i class="fa-solid fa-map-location-dot" aria-hidden="true"></i>
+          </a>
+
+          <a class="btn-acao" id="linkWhatsapp" href="#" target="_blank" rel="noopener"
+             aria-label="Confirmar presença pelo WhatsApp" title="Confirmar presença">
+            <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+          </a>
+
+          <button class="btn-acao" id="btnPresente" type="button"
+                  aria-label="Ver sugestões de presentes" title="Presente">
+            <i class="fa-solid fa-gift" aria-hidden="true"></i>
+          </button>
+        </nav>
+
+        <p class="assinatura">Com carinho, família do Bernardo</p>
+      </section>
+
+      <footer class="rodape">FEITO COM AMOR PARA CELEBRAR O BERNARDO ✦</footer>
+    </main>
+  </div>
+  </div>
+
+  <!-- MODAL DE PRESENTES -->
+  <div class="modal-fundo" id="modalPresente" aria-hidden="true">
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="tituloPresente">
+      <button class="modal-fechar" id="fecharPresente" type="button" aria-label="Fechar">×</button>
+      <span class="eyebrow">Um mimo para nosso pequeno</span>
+      <h2 id="tituloPresente">Sugestões de presentes</h2>
       <p class="modal-intro">Sua presença é o mais importante! Mas, se desejar presentear o Bernardo, deixamos algumas informações para ajudar.</p>
-      <div class="measurements">
+
+      <div class="medidas">
         <div><span>ROUPINHA</span><b>A preencher</b></div>
         <div><span>CALÇADO</span><b>A preencher</b></div>
         <div><span>ALTURA</span><b>A preencher</b></div>
       </div>
-      <div class="pix-area">
-        <span class="pix-label">PIX • PRESENTE EM CARINHO</span>
-        <div class="qr-placeholder" aria-label="Espaço reservado para o QR Code Pix">
-          <span>QR CODE<br>PIX</span>
-        </div>
-        <p>O QR Code e a chave Pix serão adicionados aqui.</p>
-        <button class="copy-pix" id="copyPix" type="button" disabled>Copiar chave Pix</button>
+
+      <div class="area-pix">
+        <span class="rotulo">PIX • PRESENTE EM CARINHO</span>
+        <div class="qr-espaco" aria-label="Espaço reservado para o QR Code Pix">QR CODE PIX</div>
+        <p>Chave: <strong>ddaprocha@gmail.com</strong></p>
+        <button class="copiar-pix" id="copiarPix" type="button">Copiar chave Pix</button>
       </div>
-      <p class="modal-thanks">Muito obrigado por fazer parte desse momento! ♡</p>
+
+      <p class="modal-obrigado">Muito obrigado por fazer parte desse momento! ♡</p>
     </section>
   </div>
-<audio
-    id="backgroundMusic"
-    src="assets/musica.mpeg"
-    loop
-    preload="auto">
-</audio>
 
-  <script src="script.js"></script>
+  <script>
+    /* =========================================================
+       CONFIGURAÇÃO (edite aqui)
+       ========================================================= */
+    const CONFIG = {
+      whatsapp: "5514996674814",   // DDI 55 + DDD 14 + número
+      whatsappMensagem: "Olá! Gostaria de confirmar minha presença no primeiro aniversário do Bernardo, no dia 20/02/2027. 💚",
+      locationUrl: "https://maps.app.goo.gl/cG246U7oiLVSuCKVA",
+      pixKey: "ddaprocha@gmail.com"
+    };
+
+    /* ----------------- MÚSICA ----------------- */
+    // Trecho que toca em loop, em segundos. 7 s = 0:07 | 178 s = 2:58
+    const MUSICA = { inicio: 7, fim: 178, volume: 0.35 };
+    const CHAVE_POSICAO_MUSICA = "bernardoConviteMusicaPosicao";
+
+    const audio = document.getElementById("musica");
+    let saindoDaPagina = false;   // true enquanto a página está sendo fechada/trocada
+    let musicaIniciada = false;   // true depois que o envelope foi aberto
+
+    audio.volume = MUSICA.volume;
+
+    // Lê a posição salva (para continuar de onde parou ao recarregar)
+    function obterPosicaoSalva() {
+      try {
+        const valor = Number(sessionStorage.getItem(CHAVE_POSICAO_MUSICA));
+        return Number.isFinite(valor) && valor >= MUSICA.inicio && valor < MUSICA.fim
+          ? valor
+          : MUSICA.inicio;
+      } catch {
+        return MUSICA.inicio;
+      }
+    }
+
+    // Salva a posição atual ao sair da página
+    function salvarPosicao() {
+      try {
+        sessionStorage.setItem(CHAVE_POSICAO_MUSICA, String(audio.currentTime || MUSICA.inicio));
+      } catch {
+        // Se o armazenamento estiver indisponível, o convite segue normalmente.
+      }
+    }
+
+    function tocar() {
+      if (saindoDaPagina) return;
+      const promessa = audio.play();
+      if (promessa && typeof promessa.catch === "function") {
+        promessa.catch(() => {
+          // Bloqueado pelo navegador: não há o que fazer sem novo toque do visitante.
+        });
+      }
+    }
+
+    // Chamado dentro do clique no envelope (gesto do usuário, que o navegador exige)
+    function iniciarMusica() {
+      musicaIniciada = true;
+      saindoDaPagina = false;
+
+      const posicao = obterPosicaoSalva();
+      if (audio.readyState >= 1) {
+        audio.currentTime = posicao;
+      } else {
+        audio.addEventListener("loadedmetadata", () => { audio.currentTime = posicao; }, { once: true });
+      }
+      tocar();
+    }
+
+    // Loop do trecho configurado
+    audio.addEventListener("timeupdate", () => {
+      if (audio.currentTime >= MUSICA.fim) audio.currentTime = MUSICA.inicio;
+    });
+
+    // Se o arquivo terminar antes do trecho configurado, reinicia
+    audio.addEventListener("ended", () => {
+      if (saindoDaPagina) return;
+      audio.currentTime = MUSICA.inicio;
+      tocar();
+    });
+
+    // Sair/fechar/navegar para outro endereço: salva a posição e pausa
+    window.addEventListener("pagehide", () => {
+      salvarPosicao();
+      saindoDaPagina = true;
+      audio.pause();
+    });
+
+    // Voltar pelo histórico do navegador: retoma se a música já tinha começado
+    window.addEventListener("pageshow", () => {
+      saindoDaPagina = false;
+      if (musicaIniciada) tocar();
+    });
+
+    // Trocar de aba NÃO pausa. Só retoma se o celular tiver pausado o áudio em segundo plano.
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "hidden") {
+        // Aba minimizada / trocou de app: pausa a música
+        salvarPosicao();
+        audio.pause();
+      } else if (document.visibilityState === "visible" && musicaIniciada && !saindoDaPagina) {
+        // Voltou para a aba: retoma de onde parou
+        tocar();
+      }
+    });
+
+    /* ----------------- ABERTURA DO ENVELOPE ----------------- */
+    const abrirConvite = document.getElementById("abrirConvite");
+    const opening = document.getElementById("opening");
+    const invitation = document.getElementById("invitation");
+
+    abrirConvite.addEventListener("click", () => {
+      abrirConvite.disabled = true;   // evita clique duplo
+      iniciarMusica();                // música começa aqui, dentro do clique
+
+      opening.style.transition = "opacity .65s ease, transform .65s ease";
+      opening.style.opacity = "0";
+      opening.style.transform = "scale(1.025)";
+
+      setTimeout(() => {
+        opening.hidden = true;
+        invitation.classList.add("visible");
+        invitation.setAttribute("aria-hidden", "false");
+        window.scrollTo({ top: 0, behavior: "auto" });
+      }, 620);
+    });
+
+    /* ----------------- LINKS ----------------- */
+    document.getElementById("linkWhatsapp").href =
+      `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(CONFIG.whatsappMensagem)}`;
+
+    const linkLocalizacao = document.getElementById("linkLocalizacao");
+    if (CONFIG.locationUrl.trim()) {
+      linkLocalizacao.href = CONFIG.locationUrl;
+    } else {
+      linkLocalizacao.addEventListener("click", (evento) => {
+        evento.preventDefault();
+        alert("A localização será adicionada assim que o link do mapa estiver definido.");
+      });
+    }
+
+    /* ----------------- MODAL DE PRESENTES ----------------- */
+    const modal = document.getElementById("modalPresente");
+    const btnPresente = document.getElementById("btnPresente");
+    const fecharPresente = document.getElementById("fecharPresente");
+
+    function abrirModal() {
+      modal.classList.add("aberto");
+      modal.setAttribute("aria-hidden", "false");
+      fecharPresente.focus();
+    }
+    function fecharModal() {
+      modal.classList.remove("aberto");
+      modal.setAttribute("aria-hidden", "true");
+      btnPresente.focus();
+    }
+    btnPresente.addEventListener("click", abrirModal);
+    fecharPresente.addEventListener("click", fecharModal);
+    modal.addEventListener("click", (evento) => {
+      if (evento.target === modal) fecharModal();
+    });
+    document.addEventListener("keydown", (evento) => {
+      if (evento.key === "Escape" && modal.classList.contains("aberto")) fecharModal();
+    });
+
+    document.getElementById("copiarPix").addEventListener("click", async (evento) => {
+      const botao = evento.currentTarget;
+      try {
+        await navigator.clipboard.writeText(CONFIG.pixKey);
+        botao.textContent = "Chave Pix copiada!";
+      } catch {
+        botao.textContent = "Copie: " + CONFIG.pixKey;
+      }
+    });
+  </script>
 </body>
 </html>
