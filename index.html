@@ -16,12 +16,12 @@
   <style>
     :root {
       --branco: #ffffff;
-      --texto: #1d2a21;          /* ~15:1 sobre branco */
-      --texto-suave: #4a4f44;    /* ~8:1 sobre branco */
-      --verde: #14412e;          /* títulos e botões */
-      --verde-escuro: #0c2a1d;   /* rodapé */
-      --dourado: #c49a50;        /* só decorativo */
-      --dourado-texto: #7a5a24;  /* textos dourados, ~6:1 */
+      --texto: #1d2a21;
+      --texto-suave: #4a4f44;
+      --verde: #14412e;
+      --verde-escuro: #0c2a1d;
+      --dourado: #c49a50;
+      --dourado-texto: #7a5a24;
       --borda: #e4d9bd;
       --creme: #faf7ef;
       --serif: "Playfair Display", Georgia, serif;
@@ -30,7 +30,10 @@
 
     * { box-sizing: border-box; }
     [hidden] { display: none !important; }
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
 
     body {
       margin: 0;
@@ -39,7 +42,16 @@
       font-family: var(--sans);
       font-size: 1.125rem;
       line-height: 1.75;
-      overflow-x: hidden; /* evita barra lateral causada pelos animais */
+      overflow-x: hidden;
+      width: 100%;
+      max-width: 100vw;
+    }
+
+    /* Nenhuma imagem pode ultrapassar a largura da tela */
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
     }
 
     button, a { font: inherit; }
@@ -49,7 +61,6 @@
     }
 
     /* ----------- TELA DE ABERTURA (envelope) ----------- */
-    /* Restaurada: ao tocar no envelope, a música começa e a página do convite aparece */
     .opening {
       min-height: 100svh;
       padding: 42px 20px 28px;
@@ -119,7 +130,6 @@
       filter: drop-shadow(0 18px 24px rgba(0, 0, 0, .28));
     }
     .envelope-button img {
-      display: block;
       width: 100%;
       border-radius: 3px;
       box-shadow: 0 20px 55px rgba(0, 0, 0, .32);
@@ -146,7 +156,7 @@
       letter-spacing: .04em;
     }
 
-    /* Página do convite: fica oculta até o envelope ser aberto */
+    /* Página do convite: oculta até abrir envelope */
     .invitation { display: none; opacity: 0; background: var(--branco); }
     .invitation.visible { display: block; animation: pageIn .85s ease forwards; }
     @keyframes pageIn { to { opacity: 1; } }
@@ -161,7 +171,6 @@
       background: #b8ad8c;
     }
     .hero-foto {
-      display: block;
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -283,7 +292,6 @@
       overflow: hidden;
     }
     .foto-secao img {
-      display: block;
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -337,15 +345,16 @@
       position: absolute;
       z-index: 5;
       width: calc(var(--tam, 150px) * .8);
+      max-width: 45vw;
       height: auto;
       pointer-events: none;
       user-select: none;
       transform: rotate(var(--rot, 0deg)) scaleX(var(--espelho, 1));
     }
-    .canto-direita-topo  { right: -7px; --tam: 250px; }
-    .canto-direita-base  { right: -7px; --tam: 250px; }
-    .canto-esquerda-topo { left: -7px; --tam: 250px; }
-    .canto-esquerda-base { left: -7px; --tam: 250px; }
+    .canto-direita-topo  { right: -10px; top: -10px;    --tam: 250px; }
+    .canto-direita-base  { right: -10px; bottom: -10px; --tam: 250px; }
+    .canto-esquerda-topo { left:  -10px; top: -10px;    --tam: 250px; }
+    .canto-esquerda-base { left:  -10px; bottom: -10px; --tam: 250px; }
 
     /* ----------- FECHAMENTO ----------- */
     .fechamento { background: var(--branco); padding-bottom: 64px; }
@@ -446,35 +455,57 @@
     .modal-obrigado { margin-top: 18px; font: italic 1.05rem var(--serif); color: var(--dourado-texto); }
 
     /* ----------- RESPONSIVO ----------- */
-    @media (min-width: 700px) {
+    /* Tablets e desktops (601px+) */
+    @media (min-width: 601px) {
       .bloco { padding: 96px 40px; }
-      .animal-espiando { width: calc(var(--tam, 150px) * 1.9); }
-      .canto-direita-topo  { right: 15px; --tam: 250px; }
-      .canto-direita-base  { right: 15px; --tam: 250px; }
-      .canto-esquerda-topo { left: 15px; --tam: 250px; }
-      .canto-esquerda-base { left: 15px; --tam: 250px; }
+      .animal-espiando { width: calc(var(--tam, 150px) * 1.2); }
+      .canto-direita-topo  { right: 10px; top: 0;    --tam: 250px; }
+      .canto-direita-base  { right: 10px; bottom: 0; --tam: 250px; }
+      .canto-esquerda-topo { left:  10px; top: 0;    --tam: 250px; }
+      .canto-esquerda-base { left:  10px; bottom: 0; --tam: 250px; }
       .foto-secao { height: 560px; }
       .opening { padding-top: 56px; }
     }
-    @media (max-width: 768px) {
-      .foto-secao { height: 380px; }
-    }
+
+    /* Mobile (até 600px) */
     @media (max-width: 600px) {
-      .opening { padding-top: 30px; }
-      .envelope-button { width: 96vw; }
+      body { font-size: 1rem; }
+      .opening { padding: 30px 16px 24px; }
+      .envelope-button { width: 92vw; }
       .envelope-cta { padding: 8px 12px; letter-spacing: .08em; }
       .opening-foot { max-width: 260px; line-height: 1.6; }
-      .hero { min-height: 480px; height: 112vw; max-height: 650px; }
-      .bloco { padding-left: 22px; padding-right: 22px; }
-      .btn-acao { width: 56px; height: 56px; font-size: 1.3rem; }
+
+      .hero {
+        height: 90vw;
+        min-height: 380px;
+        max-height: 560px;
+      }
+
+      .bloco { padding: 56px 20px; }
+      .btn-acao { width: 54px; height: 54px; font-size: 1.25rem; }
       .acoes { gap: 12px; }
-      .canto-direita-topo  { --tam: 150px; top: -40px; right: -14px; }
-      .canto-direita-base  { --tam: 110px; bottom: -36px; right: -14px; }
-      .canto-esquerda-topo { --tam: 110px; top: -36px; left: -14px; }
-      .canto-esquerda-base { --tam: 110px; bottom: -36px; left: -14px; }
+
+      .animal-espiando { max-width: 45vw; }
+      .canto-direita-topo  { --tam: 120px; top: -20px; right: -6px; }
+      .canto-direita-base  { --tam: 100px; bottom: -20px; right: -6px; }
+      .canto-esquerda-topo { --tam: 100px; top: -20px; left: -6px; }
+      .canto-esquerda-base { --tam: 100px; bottom: -20px; left: -6px; }
+
+      .foto-secao { height: 320px; }
       .medidas { gap: 5px; }
       .medidas b { font-size: .8rem; }
+      .cartao-data strong { font-size: 4.5rem; }
+      .modal { padding: 28px 18px 20px; }
     }
+
+    /* Telas muito pequenas (até 380px) */
+    @media (max-width: 380px) {
+      .bloco { padding: 48px 16px; }
+      .hero-legenda h1 { font-size: 2.2rem; }
+      .cartao-data strong { font-size: 4rem; }
+      .animal-espiando { max-width: 40vw; }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
         scroll-behavior: auto !important;
@@ -486,17 +517,12 @@
 
 <body>
 
-  <!-- ÁUDIO: não toca sozinho. Começa quando o envelope é aberto (gesto do usuário,
-       exigido pelos navegadores). -->
   <audio id="musica" preload="auto">
     <source src="assets/musica.mpeg" type="audio/mpeg">
     <source src="assets/musica.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- ============================================================
-       TELA DE ABERTURA (envelope)
-       Ao tocar no envelope: a música começa e o convite aparece.
-       ============================================================ -->
+  <!-- TELA DE ABERTURA (envelope) -->
   <section class="opening" id="opening" aria-label="Abrir convite">
     <div class="opening-glow"></div>
     <div class="opening-copy">
@@ -515,9 +541,7 @@
     <p class="opening-foot">Com carinho, esperamos você para celebrar conosco</p>
   </section>
 
-  <!-- ============================================================
-       PÁGINA DO CONVITE (oculta até abrir o envelope)
-       ============================================================ -->
+  <!-- PÁGINA DO CONVITE -->
   <div class="invitation" id="invitation" aria-hidden="true">
   <div class="pagina">
     <main>
@@ -539,8 +563,6 @@
 
       <!-- BOAS-VINDAS -->
       <section class="boas-vindas bloco">
-        <!-- Leão espiando pela quina superior direita.
-             Arquivo esperado: assets/leaozinho.png -->
         <img class="animal-espiando canto-direita-topo" src="assets/leaozinho.png" alt="" aria-hidden="true"
              onerror="this.remove()">
 
@@ -553,8 +575,6 @@
 
       <!-- DATA -->
       <section class="detalhes bloco">
-        <!-- Placeholder de animal, canto inferior esquerdo.
-             Troque o src pela sua imagem PNG quando tiver. -->
         <img class="animal-espiando canto-esquerda-base"
              src="https://placehold.co/220x220/png?text=Coelho" alt="" aria-hidden="true">
 
@@ -564,6 +584,7 @@
           <span class="mes">FEVEREIRO</span>
           <strong>20</strong>
           <span class="dia-semana">SÁBADO • 2027</span>
+          <span class="dia-semana">14:00</span>
         </div>
         <p class="nota-data">Será uma alegria ter você com a gente!</p>
       </section>
@@ -575,7 +596,6 @@
 
       <!-- FECHAMENTO + BOTÕES -->
       <section class="fechamento bloco">
-        <!-- Animal, canto inferior direito -->
         <img class="animal-espiando canto-direita-base"
              src="assets/leaozinho.png" alt="" aria-hidden="true">
 
@@ -583,8 +603,6 @@
         <h2>Esperamos por você!</h2>
         <p>Confirme sua presença e, se desejar, confira as informações especiais que preparamos.</p>
 
-        <!-- Botões horizontais com ícones.
-             Cada um tem aria-label (leitor de tela) e title (tooltip). -->
         <nav class="acoes" aria-label="Ações do convite">
           <a class="btn-acao" id="linkLocalizacao" href="#" target="_blank" rel="noopener"
              aria-label="Ver localização no mapa" title="Localização">
@@ -637,27 +655,25 @@
 
   <script>
     /* =========================================================
-       CONFIGURAÇÃO (edite aqui)
+       CONFIGURAÇÃO
        ========================================================= */
     const CONFIG = {
-      whatsapp: "5514996674814",   // DDI 55 + DDD 14 + número
+      whatsapp: "5514996674814",
       whatsappMensagem: "Olá! Gostaria de confirmar minha presença no primeiro aniversário do Bernardo, no dia 20/02/2027. 💚",
       locationUrl: "https://maps.app.goo.gl/cG246U7oiLVSuCKVA",
       pixKey: "ddaprocha@gmail.com"
     };
 
     /* ----------------- MÚSICA ----------------- */
-    // Trecho que toca em loop, em segundos. 7 s = 0:07 | 178 s = 2:58
     const MUSICA = { inicio: 7, fim: 178, volume: 0.35 };
     const CHAVE_POSICAO_MUSICA = "bernardoConviteMusicaPosicao";
 
     const audio = document.getElementById("musica");
-    let saindoDaPagina = false;   // true enquanto a página está sendo fechada/trocada
-    let musicaIniciada = false;   // true depois que o envelope foi aberto
+    let saindoDaPagina = false;
+    let musicaIniciada = false;
 
     audio.volume = MUSICA.volume;
 
-    // Lê a posição salva (para continuar de onde parou ao recarregar)
     function obterPosicaoSalva() {
       try {
         const valor = Number(sessionStorage.getItem(CHAVE_POSICAO_MUSICA));
@@ -669,26 +685,42 @@
       }
     }
 
-    // Salva a posição atual ao sair da página
     function salvarPosicao() {
       try {
         sessionStorage.setItem(CHAVE_POSICAO_MUSICA, String(audio.currentTime || MUSICA.inicio));
-      } catch {
-        // Se o armazenamento estiver indisponível, o convite segue normalmente.
-      }
+      } catch {}
     }
 
     function tocar() {
       if (saindoDaPagina) return;
       const promessa = audio.play();
       if (promessa && typeof promessa.catch === "function") {
-        promessa.catch(() => {
-          // Bloqueado pelo navegador: não há o que fazer sem novo toque do visitante.
-        });
+        promessa.catch(() => {});
       }
     }
 
-    // Chamado dentro do clique no envelope (gesto do usuário, que o navegador exige)
+    // 🔴 ENCERRA a música de verdade: pausa + volta ao início + descarrega
+    // Isso remove o ícone de "play" da notificação/controle de mídia.
+    function encerrarMusica() {
+      try {
+        audio.pause();
+        audio.currentTime = 0;
+        // Descarrega o áudio: força o navegador a liberar a sessão de mídia
+        audio.removeAttribute("src");
+        audio.load();
+        // Recarrega o áudio para uso futuro (se voltar pra aba)
+        const srcMpeg = document.createElement("source");
+        srcMpeg.src = "assets/musica.mpeg";
+        srcMpeg.type = "audio/mpeg";
+        const srcMp3 = document.createElement("source");
+        srcMp3.src = "assets/musica.mp3";
+        srcMp3.type = "audio/mpeg";
+        audio.appendChild(srcMpeg);
+        audio.appendChild(srcMp3);
+        audio.load();
+      } catch {}
+    }
+
     function iniciarMusica() {
       musicaIniciada = true;
       saindoDaPagina = false;
@@ -702,39 +734,35 @@
       tocar();
     }
 
-    // Loop do trecho configurado
     audio.addEventListener("timeupdate", () => {
       if (audio.currentTime >= MUSICA.fim) audio.currentTime = MUSICA.inicio;
     });
 
-    // Se o arquivo terminar antes do trecho configurado, reinicia
     audio.addEventListener("ended", () => {
       if (saindoDaPagina) return;
       audio.currentTime = MUSICA.inicio;
       tocar();
     });
 
-    // Sair/fechar/navegar para outro endereço: salva a posição e pausa
+    // Fechar/navegar para outro endereço → ENCERRA
     window.addEventListener("pagehide", () => {
       salvarPosicao();
       saindoDaPagina = true;
-      audio.pause();
+      encerrarMusica();
     });
 
-    // Voltar pelo histórico do navegador: retoma se a música já tinha começado
+    // Voltar pelo histórico → retoma
     window.addEventListener("pageshow", () => {
       saindoDaPagina = false;
       if (musicaIniciada) tocar();
     });
 
-    // Trocar de aba NÃO pausa. Só retoma se o celular tiver pausado o áudio em segundo plano.
+    // Minimizar/trocar de aba → ENCERRA (remove o "play" da notificação)
     document.addEventListener("visibilitychange", () => {
       if (document.visibilityState === "hidden") {
-        // Aba minimizada / trocou de app: pausa a música
         salvarPosicao();
-        audio.pause();
+        encerrarMusica();
       } else if (document.visibilityState === "visible" && musicaIniciada && !saindoDaPagina) {
-        // Voltou para a aba: retoma de onde parou
         tocar();
       }
     });
@@ -745,8 +773,8 @@
     const invitation = document.getElementById("invitation");
 
     abrirConvite.addEventListener("click", () => {
-      abrirConvite.disabled = true;   // evita clique duplo
-      iniciarMusica();                // música começa aqui, dentro do clique
+      abrirConvite.disabled = true;
+      iniciarMusica();
 
       opening.style.transition = "opacity .65s ease, transform .65s ease";
       opening.style.opacity = "0";
