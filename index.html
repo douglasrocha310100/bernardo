@@ -31,10 +31,7 @@
 
   * { box-sizing: border-box; }
   [hidden] { display: none !important; }
-  html {
-    scroll-behavior: smooth;
-    overflow-x: hidden;
-  }
+  html { scroll-behavior: smooth; overflow-x: hidden; }
 
   body {
     margin: 0;
@@ -48,11 +45,7 @@
     max-width: 100vw;
   }
 
-  img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-  }
+  img { max-width: 100%; height: auto; display: block; }
 
   button, a { font: inherit; }
   button:focus-visible, a:focus-visible {
@@ -166,7 +159,9 @@
     border-radius: 12px;
     pointer-events: none;
     user-select: none;
+    background-color: #ffffff;
   }
+
 
   /* Página do convite: oculta até abrir envelope */
   .invitation { display: none; opacity: 0; background: var(--branco); }
@@ -295,13 +290,6 @@
     font: 600 5.5rem/1 var(--serif);
     color: var(--verde);
   }
-  .nota-data {
-    font-family: var(--serif);
-    font-weight: 500;
-    font-style: normal;
-    color: var(--texto);
-    letter-spacing: .01em;
-  }
 
   /* ----------- FOTO SECUNDÁRIA ----------- */
   .foto-secao {
@@ -317,26 +305,9 @@
     height: 100%;
     object-fit: cover;
     display: block;
-    -webkit-mask-image: linear-gradient(
-      to bottom,
-      transparent 0%,
-      rgba(0,0,0,.15) 8%,
-      #000 24%,
-      #000 76%,
-      rgba(0,0,0,.15) 92%,
-      transparent 100%
-    );
-    mask-image: linear-gradient(
-      to bottom,
-      transparent 0%,
-      rgba(0,0,0,.15) 8%,
-      #000 24%,
-      #000 76%,
-      rgba(0,0,0,.15) 92%,
-      transparent 100%
-    );
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.15) 8%, #000 24%, #000 76%, rgba(0,0,0,.15) 92%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.15) 8%, #000 24%, #000 76%, rgba(0,0,0,.15) 92%, transparent 100%);
   }
-
   .foto-secao::before,
   .foto-secao::after {
     content: "";
@@ -349,48 +320,14 @@
   }
   .foto-secao::before {
     top: 0;
-    background: linear-gradient(
-      to bottom,
-      var(--branco) 0%,
-      rgba(255,255,255,.9) 18%,
-      rgba(255,255,255,.55) 45%,
-      rgba(255,255,255,0) 100%
-    );
+    background: linear-gradient(to bottom, var(--branco) 0%, rgba(255,255,255,.9) 18%, rgba(255,255,255,.55) 45%, rgba(255,255,255,0) 100%);
   }
   .foto-secao::after {
     bottom: 0;
-    background: linear-gradient(
-      to top,
-      var(--branco) 0%,
-      rgba(255,255,255,.9) 18%,
-      rgba(255,255,255,.55) 45%,
-      rgba(255,255,255,0) 100%
-    );
+    background: linear-gradient(to top, var(--branco) 0%, rgba(255,255,255,.9) 18%, rgba(255,255,255,.55) 45%, rgba(255,255,255,0) 100%);
   }
 
-  .foto-secao .folhagem-topo,
-  .foto-secao .folhagem-base {
-    position: absolute;
-    left: 0;
-    width: 100%;
-    height: 150px;
-    pointer-events: none;
-    z-index: 3;
-    background-repeat: repeat-x;
-    background-size: 420px 150px;
-  }
-  .foto-secao .folhagem-topo {
-    top: -1px;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 420 150' preserveAspectRatio='none'><g fill='%23ffffff'><path d='M0,0 L420,0 L420,52 C405,48 396,66 380,62 C362,58 354,76 336,72 C318,68 310,86 292,82 C274,78 266,96 248,92 C230,88 222,106 204,102 C186,98 178,116 160,112 C142,108 134,126 116,122 C98,118 90,136 72,132 C54,128 46,146 28,142 C14,139 6,132 0,128 Z'/><path d='M40,52 q18,-28 44,-18 q-22,14 -44,18 Z'/><path d='M120,72 q22,-32 52,-22 q-26,18 -52,22 Z'/><path d='M210,90 q20,-30 48,-20 q-24,16 -48,20 Z'/><path d='M300,72 q22,-30 50,-20 q-25,16 -50,20 Z'/><path d='M370,58 q18,-24 42,-16 q-20,12 -42,16 Z'/></g></svg>");
-    background-position: top center;
-  }
-  .foto-secao .folhagem-base {
-    bottom: -1px;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 420 150' preserveAspectRatio='none'><g fill='%23ffffff'><path d='M0,150 L420,150 L420,98 C405,102 396,84 380,88 C362,92 354,74 336,78 C318,82 310,64 292,68 C274,72 266,54 248,58 C230,62 222,44 204,48 C186,52 178,34 160,38 C142,42 134,24 116,28 C98,32 90,14 72,18 C54,22 46,4 28,8 C14,11 6,18 0,22 Z'/><path d='M40,98 q18,28 44,18 q-22,-14 -44,-18 Z'/><path d='M120,78 q22,32 52,22 q-26,-18 -52,-22 Z'/><path d='M210,60 q20,30 48,20 q-24,-16 -48,-20 Z'/><path d='M300,78 q22,30 50,20 q-25,-16 -50,-20 Z'/><path d='M370,92 q18,24 42,16 q-20,-12 -42,-16 Z'/></g></svg>");
-    background-position: bottom center;
-  }
-
-  /* ----------- BOTÕES GRANDES COM ÍCONE + LEGENDA ABAIXO ----------- */
+  /* ----------- BOTÕES ----------- */
   .acoes {
     display: flex;
     flex-wrap: wrap;
@@ -418,14 +355,8 @@
     cursor: pointer;
     transition: transform .18s ease, background .18s ease, box-shadow .18s ease;
   }
-  .btn-acao i {
-    font-size: 2.4rem;
-    line-height: 1;
-  }
-  .btn-acao span {
-    font-size: .95rem;
-    font-weight: 500;
-  }
+  .btn-acao i { font-size: 2.4rem; line-height: 1; }
+  .btn-acao span { font-size: .95rem; font-weight: 500; }
   .btn-acao:hover {
     background: var(--verde-escuro);
     transform: translateY(-3px);
@@ -436,21 +367,48 @@
     outline-offset: 3px;
   }
 
-  /* ----------- ANIMAIS ESPIANDO ----------- */
+  /* =========================================================
+     ANIMAIS ESPIANDO — usa as variáveis definidas no HTML
+     (--largura, --topo, --direita, --baixo, --esquerda,
+      --rotacao, --espelho, --camada  + versões -mobile)
+     ========================================================= */
   .animal-espiando {
     position: absolute;
-    z-index: 5;
-    width: calc(var(--tam, 150px) * .8);
+    z-index: var(--camada, 5);
+
+    width: var(--largura, 250px);
     max-width: 45vw;
     height: auto;
+
+    top: var(--topo, auto);
+    right: var(--direita, auto);
+    bottom: var(--baixo, auto);
+    left: var(--esquerda, auto);
+
     pointer-events: none;
     user-select: none;
-    transform: rotate(var(--rot, 0deg)) scaleX(var(--espelho, 1));
+
+    mix-blend-mode: multiply;
+    background: transparent;
+
+    transform:
+      rotate(var(--rotacao, 0deg))
+      scaleX(var(--espelho, 1));
   }
-  .canto-direita-topo  { right: -10px; top: -10px;    --tam: 250px; }
-  .canto-direita-base  { right: -10px; bottom: -10px; --tam: 250px; }
-  .canto-esquerda-topo { left:  -10px; top: -10px;    --tam: 250px; }
-  .canto-esquerda-base { left:  -10px; bottom: -10px; --tam: 250px; }
+
+  @media (max-width: 600px) {
+    .animal-espiando {
+      z-index: var(--camada-mobile, var(--camada, 5));
+      width: var(--largura-mobile, 140px);
+      top: var(--topo-mobile, var(--topo, auto));
+      right: var(--direita-mobile, var(--direita, auto));
+      bottom: var(--baixo-mobile, var(--baixo, auto));
+      left: var(--esquerda-mobile, var(--esquerda, auto));
+      transform:
+        rotate(var(--rotacao-mobile, var(--rotacao, 0deg)))
+        scaleX(var(--espelho-mobile, var(--espelho, 1)));
+    }
+  }
 
   /* ----------- FECHAMENTO ----------- */
   .fechamento { background: var(--branco); padding-bottom: 64px; }
@@ -493,7 +451,6 @@
     background: var(--branco);
     text-align: center;
   }
-  /* Macaquinho pendurado no topo direito, para fora do modal */
   .modal-animal {
     position: absolute;
     top: -4px;
@@ -525,8 +482,6 @@
     font: 600 clamp(1.8rem, 6vw, 2.4rem)/1.1 var(--serif);
     color: var(--verde);
   }
-  .modal-intro { font-size: .95rem; color: var(--texto-suave); }
-  /* Opções centralizadas */
   .medidas {
     display: flex;
     flex-wrap: wrap;
@@ -562,11 +517,7 @@
     font-size: .8rem;
     overflow: hidden;
   }
-  .qr-espaco img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-  }
+  .qr-espaco img { width: 100%; height: 100%; object-fit: contain; }
   .area-pix p { font-size: .85rem; color: var(--texto-suave); margin: 6px 0; }
   .copiar-pix {
     margin-top: 6px;
@@ -578,7 +529,6 @@
     font-size: .85rem;
     cursor: pointer;
   }
-  .modal-obrigado { margin-top: 18px; font: italic 1.05rem var(--serif); color: var(--dourado-texto); }
 
   /* ----------- CHUVA DE FOLHAS ----------- */
   .chuva-folhas {
@@ -608,33 +558,17 @@
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><path d='M16 2 C22 8 28 12 28 20 C28 26 22 30 16 30 C10 30 4 26 4 20 C4 12 10 8 16 2 Z' fill='%2314412e' opacity='0.85'/><path d='M16 4 L16 28' stroke='%230c2a1d' stroke-width='1.2' fill='none' opacity='0.6'/></svg>");
   }
   @keyframes cair {
-    0% {
-      transform: translateY(0) translateX(0) rotate(0deg);
-    }
-    50% {
-      transform: translateY(50vh) translateX(20px) rotate(180deg);
-    }
-    100% {
-      transform: translateY(110vh) translateX(-10px) rotate(360deg);
-    }
+    0%   { transform: translateY(0) translateX(0) rotate(0deg); }
+    50%  { transform: translateY(50vh) translateX(20px) rotate(180deg); }
+    100% { transform: translateY(110vh) translateX(-10px) rotate(360deg); }
   }
 
   /* ----------- RESPONSIVO ----------- */
   @media (min-width: 601px) {
     .bloco { padding: 96px 40px; }
-    .animal-espiando { width: calc(var(--tam, 150px) * 1.2); }
-    .canto-direita-topo  {  top: 0;    --tam: 250px; }
-    .canto-direita-base  { bottom: 0; --tam: 250px; }
-    .canto-esquerda-topo {  top: 0;    --tam: 250px; }
-    .canto-esquerda-base {  bottom: 0; --tam: 250px; }
     .foto-secao { height: 580px; }
     .foto-secao::before,
     .foto-secao::after { height: 200px; }
-    .foto-secao .folhagem-topo,
-    .foto-secao .folhagem-base {
-      height: 170px;
-      background-size: 480px 170px;
-    }
     .opening { padding-top: 56px; }
     .btn-acao { width: 200px; padding: 32px 20px; }
     .btn-acao i { font-size: 2.8rem; }
@@ -655,29 +589,16 @@
     }
 
     .bloco { padding: 56px 20px; }
-
     .acoes { gap: 14px; }
-    .btn-acao {
-      width: 140px;
-      padding: 22px 12px;
-    }
+    .btn-acao { width: 140px; padding: 22px 12px; }
     .btn-acao i { font-size: 2rem; }
     .btn-acao span { font-size: .85rem; }
 
     .animal-espiando { max-width: 45vw; }
-    .canto-direita-topo  { --tam: 180px; top: -20px; right: -4px; }
-    .canto-direita-base  { --tam: 140px; bottom: 30px; right: -4px; }
-    .canto-esquerda-topo { --tam: 100px; top: -20px; left: -6px; }
-    .canto-esquerda-base { --tam: 100px; bottom: -20px; left: -6px; }
 
     .foto-secao { height: 340px; }
     .foto-secao::before,
     .foto-secao::after { height: 110px; }
-    .foto-secao .folhagem-topo,.video-macaquinho
-    .foto-secao .folhagem-base {
-      height: 100px;
-      background-size: 280px 100px;
-    }
 
     .medidas { gap: 8px; }
     .medidas b { font-size: .8rem; }
@@ -723,15 +644,12 @@
   <section class="opening" id="opening" aria-label="Abrir convite">
     <div class="opening-glow"></div>
 
-    <!-- VÍDEO DO MACAQUINHO (loop, sem som, sem controles) -->
-      <video class="video-macaquinho" id="videoMacaquinho"
-             src="assets/macaquinho.mp4"
-             autoplay muted loop playsinline preload="auto"
-             aria-hidden="true"></video>
-
+    <video class="video-macaquinho" id="videoMacaquinho"
+           src="assets/macaquinho.mp4"
+           autoplay muted loop playsinline preload="auto"
+           aria-hidden="true"></video>
 
     <div class="opening-copy">
-      
       <h2 class="eyebrow">Um convite muito especial</h2>
       <span class="regra-dourada gold-rule"></span>
     </div>
@@ -765,10 +683,34 @@
 
       <!-- BOAS-VINDAS -->
       <section class="boas-vindas bloco">
-        <img class="animal-espiando canto-direita-topo" src="assets/leaozinho.png" alt="" aria-hidden="true"
-             onerror="this.remove()">
+        <!-- LEÃO -->
+        <video class="animal-espiando leao" id="videoLeao"
+               src="assets/leao.mp4"
+               autoplay muted loop playsinline preload="auto"
+               aria-hidden="true"
+               style="
+                 /* DESKTOP */
+                 --largura: 220px;
+                 --topo: -10px;
+                 --direita: -15px;
+                 --baixo: auto;
+                 --esquerda: auto;
+                 --rotacao: 0deg;
+                 --espelho: 1;
+                 --camada: 1;
 
-        <span class="eyebrow">Uma aventura chamada vida</span>
+                 /* MOBILE */
+                 --largura-mobile: 160px;
+                 --topo-mobile: 0px;
+                 --direita-mobile: -8px;
+                 --baixo-mobile: auto;
+                 --esquerda-mobile: auto;
+                 --rotacao-mobile: 0deg;
+                 --espelho-mobile: 1;
+                 --camada-mobile: 1;
+               "></video>
+
+        <span class="eyebrow" style="position: relative; z-index: 4;">Uma aventura chamada vida</span>
         <h2>Em breve, um ano<br>de amor e aventuras!</h2>
         <span class="regra-dourada"></span>
         <p>Há um ano, nossa vida ganhou novas cores, nossos dias ficaram mais alegres e descobrimos um amor que não cabe no peito.</p>
@@ -777,14 +719,82 @@
 
       <!-- DATA -->
       <section class="detalhes bloco">
-        <img class="animal-espiando canto-esquerda-topo"
-             src="https://placehold.co/220x220/png?text=Elefante" alt="" aria-hidden="true">
-        <img class="animal-espiando canto-direita-topo"
-             src="https://placehold.co/220x220/png?text=Hipopotamo" alt="" aria-hidden="true">
-        <img class="animal-espiando canto-esquerda-base"
-             src="https://placehold.co/220x220/png?text=Coelho" alt="" aria-hidden="true">
+        <!-- ELEFANTE -->
+        <video class="animal-espiando elefante" id="videoElefante"
+               src="assets/elefante.mp4"
+               autoplay muted loop playsinline preload="auto"
+               aria-hidden="true"
+               style="
+                 --largura: 220px;
+                 --topo: -10px;
+                 --direita: auto;
+                 --baixo: auto;
+                 --esquerda: -15px;
+                 --rotacao: 0deg;
+                 --espelho: 1;
+                 --camada: 1;
 
-        <span class="eyebrow">Reserve esta data</span>
+                 --largura-mobile: 150px;
+                 --topo-mobile: -18px;
+                 --direita-mobile: auto;
+                 --baixo-mobile: auto;
+                 --esquerda-mobile: -8px;
+                 --rotacao-mobile: 0deg;
+                 --espelho-mobile: 1;
+                 --camada-mobile: 1;
+               "></video>
+
+        <!-- HIPOPÓTAMO -->
+        <video class="animal-espiando hipopotamo" id="videoHipopotamo"
+               src="assets/hipopo.mp4"
+               autoplay muted loop playsinline preload="auto"
+               aria-hidden="true"
+               style="
+                 --largura: 220px;
+                 --topo: -10px;
+                 --direita: -15px;
+                 --baixo: auto;
+                 --esquerda: auto;
+                 --rotacao: 0deg;
+                 --espelho: 1;
+                 --camada: 1;
+
+                 --largura-mobile: 170px;
+                 --topo-mobile: -4px;
+                 --direita-mobile: -4px;
+                 --baixo-mobile: auto;
+                 --esquerda-mobile: auto;
+                 --rotacao-mobile: 0deg;
+                 --espelho-mobile: 1;
+                 --camada-mobile: 1;
+               "></video>
+
+        <!-- ZEBRA -->
+        <video class="animal-espiando zebra" id="videoZebra"
+               src="assets/zebra.mp4"
+               autoplay muted loop playsinline preload="auto"
+               aria-hidden="true"
+               style="
+                 --largura: 220px;
+                 --topo: auto;
+                 --direita: auto;
+                 --baixo: -10px;
+                 --esquerda: -15px;
+                 --rotacao: 0deg;
+                 --espelho: 1;
+                 --camada: 1;
+
+                 --largura-mobile: 170px;
+                 --topo-mobile: auto;
+                 --direita-mobile: auto;
+                 --baixo-mobile: -8px;
+                 --esquerda-mobile: -8px;
+                 --rotacao-mobile: 0deg;
+                 --espelho-mobile: 1;
+                 --camada-mobile: 1;
+               "></video>
+
+        <span class="eyebrow" style="position: relative; z-index: 4;">Reserve esta data</span>
         <h2>Vamos celebrar?</h2>
         <div class="cartao-data">
           <span class="mes">FEVEREIRO</span>
@@ -799,12 +809,59 @@
         <img src="assets/segunda-foto.jpeg" alt="Foto do Bernardo">
       </section>
 
-      <!-- FECHAMENTO + BOTÕES -->
+      <!-- FECHAMENTO -->
       <section class="fechamento bloco">
-        <img class="animal-espiando canto-direita-base"
-             src="assets/leaozinho.png" alt="" aria-hidden="true">
+        <!-- GIRAFA -->
+        <video class="animal-espiando girafa" id="videoGirafa"
+               src="assets/girafa.mp4"
+               autoplay muted loop playsinline preload="auto"
+               aria-hidden="true"
+               style="
+                 --largura: 220px;
+                 --topo: auto;
+                 --direita: -15px;
+                 --baixo: -10px;
+                 --esquerda: auto;
+                 --rotacao: 0deg;
+                 --espelho: 1;
+                 --camada: 1;
 
-        <span class="eyebrow">Sua presença é o nosso presente</span>
+                 --largura-mobile: 180px;
+                 --topo-mobile: auto;
+                 --direita-mobile: -8px;
+                 --baixo-mobile: -6px;
+                 --esquerda-mobile: auto;
+                 --rotacao-mobile: 0deg;
+                 --espelho-mobile: 1;
+                 --camada-mobile: 1;
+               "></video>
+
+        <!-- TIGRE -->
+        <video class="animal-espiando tigre" id="videoTigre"
+               src="assets/tigre.mp4"
+               autoplay muted loop playsinline preload="auto"
+               aria-hidden="true"
+               style="
+                 --largura: 240px;
+                 --topo: auto;
+                 --direita: auto;
+                 --baixo: -10px;
+                 --esquerda: -15px;
+                 --rotacao: 0deg;
+                 --espelho: 1;
+                 --camada: 1;
+
+                 --largura-mobile: 150px;
+                 --topo-mobile: auto;
+                 --direita-mobile: auto;
+                 --baixo-mobile: -4px;
+                 --esquerda-mobile: -8px;
+                 --rotacao-mobile: 8deg;
+                 --espelho-mobile: 1;
+                 --camada-mobile: 1;
+               "></video>
+
+        <span class="eyebrow" style="position: relative; z-index: 4;">Sua presença é o nosso presente</span>
         <h2>Esperamos por você!</h2>
         <p>Confirme sua presença e, se desejar, confira as informações especiais que preparamos.</p>
 
@@ -891,9 +948,7 @@
         return Number.isFinite(valor) && valor >= MUSICA.inicio && valor < MUSICA.fim
           ? valor
           : MUSICA.inicio;
-      } catch {
-        return MUSICA.inicio;
-      }
+      } catch { return MUSICA.inicio; }
     }
 
     function salvarPosicao() {
@@ -904,11 +959,8 @@
 
     function forcarLoop() {
       if (!audio.duration || audio.duration === 0) return;
-      if (audio.currentTime < MUSICA.inicio) {
-        audio.currentTime = MUSICA.inicio;
-      } else if (audio.currentTime >= MUSICA.fim) {
-        audio.currentTime = MUSICA.inicio;
-      }
+      if (audio.currentTime < MUSICA.inicio) audio.currentTime = MUSICA.inicio;
+      else if (audio.currentTime >= MUSICA.fim) audio.currentTime = MUSICA.inicio;
     }
 
     function tocar() {
@@ -919,9 +971,7 @@
         }
       }
       const promessa = audio.play();
-      if (promessa && typeof promessa.catch === "function") {
-        promessa.catch(() => {});
-      }
+      if (promessa && typeof promessa.catch === "function") promessa.catch(() => {});
     }
 
     function encerrarMusica() {
@@ -946,7 +996,6 @@
     function iniciarMusica() {
       musicaIniciada = true;
       saindoDaPagina = false;
-
       const posicao = obterPosicaoSalva();
       if (audio.readyState >= 1) {
         audio.currentTime = posicao;
@@ -1012,27 +1061,23 @@
     });
 
     /* ----------------- VÍDEO DO MACAQUINHO ----------------- */
-    // Garante que o vídeo toque desde o carregamento (tela de abertura)
     if (videoMacaquinho) {
-      // Fallback: se o vídeo não carregar, esconde
       videoMacaquinho.addEventListener("error", () => {
         videoMacaquinho.style.display = "none";
       });
-      // Garante loop mesmo se o navegador ignorar o atributo
       videoMacaquinho.addEventListener("ended", () => {
         videoMacaquinho.currentTime = 0;
         const p = videoMacaquinho.play();
         if (p && typeof p.catch === "function") p.catch(() => {});
       });
-      // Tenta tocar assim que possível (já que está na tela inicial)
-      const tentarTocarVideo = () => {
+      const tentarTocar = () => {
         const p = videoMacaquinho.play();
         if (p && typeof p.catch === "function") p.catch(() => {});
       };
       if (videoMacaquinho.readyState >= 2) {
-        tentarTocarVideo();
+        tentarTocar();
       } else {
-        videoMacaquinho.addEventListener("loadeddata", tentarTocarVideo, { once: true });
+        videoMacaquinho.addEventListener("loadeddata", tentarTocar, { once: true });
       }
     }
 
@@ -1040,23 +1085,17 @@
     function iniciarChuvaDeFolhas() {
       if (!chuvaFolhas) return;
       const total = window.innerWidth < 600 ? 18 : 32;
-      for (let i = 0; i < total; i++) {
-        criarFolha(i, total);
-      }
+      for (let i = 0; i < total; i++) criarFolha(i, total);
     }
 
-    function criarFolha(indice, total) {
+    function criarFolha() {
       const folha = document.createElement("span");
       folha.className = "folha" + (Math.random() > 0.5 ? " verde" : "");
       let left;
       const r = Math.random();
-      if (r < 0.35) {
-        left = Math.random() * 18;
-      } else if (r < 0.70) {
-        left = 82 + Math.random() * 18;
-      } else {
-        left = 18 + Math.random() * 64;
-      }
+      if (r < 0.35) left = Math.random() * 18;
+      else if (r < 0.70) left = 82 + Math.random() * 18;
+      else left = 18 + Math.random() * 64;
       folha.style.left = left + "vw";
       const tam = 14 + Math.random() * 18;
       folha.style.width = tam + "px";
